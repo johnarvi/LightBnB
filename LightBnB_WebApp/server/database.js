@@ -30,12 +30,10 @@ const getUserWithId = function(id) {
   return db.query(`
   SELECT *
   FROM users
-  WHERE id = $1;
-  LIMIT 1;
+  WHERE users.id = $1;
   `, [id])
-    .then(res => {
-      return (res.rows.length > 0) ? res.rows[0] : null;
-    });
+    .then(res =>  res.rows[0]
+    );
 };
 exports.getUserWithId = getUserWithId;
 
