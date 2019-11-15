@@ -76,8 +76,8 @@ const getAllReservations = function(guest_id, limit = 10) {
   AND reservations.end_date < now()::date
   GROUP BY properties.id, reservations.id
   ORDER BY reservations.start_date
-  LIMIT 10;
-  `, [guest_id])
+  LIMIT $2;
+  `, [guest_id, limit])
     .then(res => {
       return (res.rows.length > 0) ? res.rows : null;
     });
@@ -132,7 +132,8 @@ const getAllProperties = function(options, limit = 10) {
   LIMIT $${queryParams.length};
   `;
 
-  //console.log(queryString, queryParams);
+  console.log('querystring', queryString);
+  console.log('queryparams', queryParams);
   
   return db.query(queryString, queryParams)
     .then(res => res.rows);
